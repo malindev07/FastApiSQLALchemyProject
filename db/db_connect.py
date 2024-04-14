@@ -9,5 +9,5 @@ engine = create_engine(
 
 # Base.metadata.create_all(engine)
 
-my_db = Storage()
-my_db.engine_to_connect = engine
+# my_db = Storage()
+# my_db.engine_to_connect = engine

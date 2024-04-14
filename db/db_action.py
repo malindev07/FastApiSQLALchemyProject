@@ -4,11 +4,15 @@ from sqlalchemy.orm import Session
 from action_url.make_short_url import make_short_url
 from action_url.url_model import UrlData
 
+
 from db.db_model import URLs
 
 
 class Storage:
     engine_to_connect: Engine
+
+    # def set_connect(self):
+    #     self.engine_to_connect = engine
 
     def create_item(self, long_url: str) -> UrlData:
         with Session(self.engine_to_connect) as session:
@@ -36,6 +40,7 @@ class Storage:
                 url_data = UrlData(
                     id=item.id, long_url=item.longurl, short_url=item.shorturl
                 )
+
                 return url_data
 
     def get_items(self) -> [UrlData]:
@@ -70,4 +75,9 @@ class Storage:
                 )
 
             session.commit()
+
             return url_data
+
+    # def connect_close(self):
+    #     with Session(self.engine_to_connect) as session:
+    #         session.close()
