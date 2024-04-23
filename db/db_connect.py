@@ -1,20 +1,17 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncEngine
 
-# from db.db_action import Storage
-# from db.db_model import Base
+# engine = create_engine(
+#     "postgresql+psycopg2://postgres:postgres@localhost:5432/ShortURLs", echo=False
+# )
 
-engine = create_engine(
-    "postgresql+psycopg2://postgres:postgres@localhost:5432/ShortURLs", echo=False
-)
+# async_engine = create_async_engine(
+#     "postgresql+asyncpg://postgres:postgres@localhost:5432/ShortURLs", echo=False
+# )
 
-async_engine = create_async_engine(
-    "postgresql+asyncpg://postgres:postgres@localhost:5432/ShortURLs", echo=False
-)
 
-async_session = async_sessionmaker(async_engine)
-
-# Base.metadata.create_all(engine)
-
-# my_db = Storage()
-# my_db.engine_to_connect = engine
+def db_connect(driver: str, login: str, password: str) -> AsyncEngine:
+    async_engine: AsyncEngine = create_async_engine(
+        f"postgresql+{driver}://{login}:{password}@localhost:5432/ShortURLs",
+        echo=False,
+    )
+    return async_engine
